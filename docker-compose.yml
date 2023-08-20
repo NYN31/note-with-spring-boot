@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  postgress:
+    container_name: note
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: note
+      POSTGRES_PASSWORD: note
+      POSTGRES_DB: note
+    volumes:
+      - note:/data/postgres
+    ports:
+      - "5432:5432"
+      - "5433:5433"
+    restart: unless-stopped
+volumes:
+  note:
