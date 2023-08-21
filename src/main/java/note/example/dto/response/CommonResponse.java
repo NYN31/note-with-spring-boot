@@ -1,13 +1,13 @@
 package note.example.dto.response;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@Getter
-@Setter
-public class CommonResponseDto {
+@Builder
+public class CommonResponse {
     public Integer code;
     public String status;
     public Object data;

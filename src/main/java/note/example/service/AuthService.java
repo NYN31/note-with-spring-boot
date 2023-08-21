@@ -1,11 +1,11 @@
 package note.example.service;
 
-import note.example.dto.request.LoginDto;
-import note.example.dto.request.SignupDto;
-import note.example.dto.response.CommonResponseDto;
+import note.example.dto.request.LoginRequest;
+import note.example.dto.request.SignupRequest;
+import note.example.dto.response.CommonResponse;
 
 public interface AuthService {
-    CommonResponseDto userSignUp(SignupDto signupDto) throws Exception;
+    CommonResponse userSignUp(SignupRequest signupRequest) throws Exception;
 
-    CommonResponseDto userLogin(LoginDto loginDto);
+    CommonResponse userLogin(LoginRequest loginRequest);
 }
