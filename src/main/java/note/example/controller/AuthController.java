@@ -8,6 +8,7 @@ import note.example.dto.response.LoginResponse;
 import note.example.dto.response.SignupResponse;
 import note.example.service.AuthService;
 import note.example.utility.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,19 +21,20 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
-    }
-
-    @PostMapping("/sign-up")
-    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest signupRequest) throws Exception {
-        log.info("Received request to signup user");
-        return Util.form(authService.userSignUp(signupRequest), HttpStatus.OK);
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         log.info("Received request to login user");
         return Util.form(authService.userLogin(loginRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest signupRequest) {
+        log.info("Received request to signup user");
+        return Util.form(authService.userSignUp(signupRequest), HttpStatus.OK);
     }
 }

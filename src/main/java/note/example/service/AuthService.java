@@ -7,7 +7,7 @@ import note.example.dto.response.LoginResponse;
 import note.example.dto.response.SignupResponse;
 
 public interface AuthService {
-    SignupResponse userSignUp(SignupRequest signupRequest) throws Exception;
+    SignupResponse userSignUp(SignupRequest signupRequest);
 
     LoginResponse userLogin(LoginRequest loginRequest);
 }

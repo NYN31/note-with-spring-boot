@@ -10,6 +10,7 @@ import note.example.exception.NotFoundException;
 import note.example.model.User;
 import note.example.repository.UserRepository;
 import note.example.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -21,6 +22,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public AuthServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -62,12 +64,11 @@ public class AuthServiceImpl implements AuthService {
     public void validateLoginUser(LoginRequest loginRequest) {
         Optional<User> userByEmail = userRepository.findByEmail(loginRequest.email);
 
-        if (userByEmail.isPresent()) {
-            if (!Objects.equals(userByEmail.get().password, loginRequest.password)) {
-                throw new RuntimeException("Password does not match");
-            }
-        } else {
+        if (!userByEmail.isPresent()) {
             throw new NotFoundException("User not found");
+        }
+        if (!Objects.equals(userByEmail.get().password, loginRequest.password)) {
+            throw new RuntimeException("Password does not match");
         }
     }
 }
