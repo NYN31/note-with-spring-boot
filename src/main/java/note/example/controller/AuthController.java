@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import note.example.dto.request.LoginRequest;
 import note.example.dto.request.SignupRequest;
 import note.example.dto.response.CommonResponse;
+import note.example.dto.response.LoginResponse;
+import note.example.dto.response.SignupResponse;
 import note.example.service.AuthService;
+import note.example.utility.Util;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,16 +24,15 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @PostMapping("/sign-up")
-    public ResponseEntity<CommonResponse> signup(@RequestBody SignupRequest signupRequest) throws Exception {
-        log.info("In user sign up endpoint");
-        return new ResponseEntity<>(authService.userSignUp(signupRequest), HttpStatus.OK);
+    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest signupRequest) throws Exception {
+        log.info("Received request to signup user");
+        return Util.form(authService.userSignUp(signupRequest), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public CommonResponse login(@RequestBody LoginRequest loginRequest) {
-        log.info("In user login endpoint");
-        return authService.userLogin(loginRequest);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        log.info("Received request to login user");
+        return Util.form(authService.userLogin(loginRequest), HttpStatus.OK);
     }
 }

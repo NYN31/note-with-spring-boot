@@ -1,14 +1,11 @@
 package note.example.dto.response;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Data
-@Builder
 public class CommonResponse {
-    public Integer code;
-    public String status;
-    public Object data;
+    protected Integer code;
+    protected String message;
 }
