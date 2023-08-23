@@ -2,7 +2,7 @@ package note.example.dto.response;
 
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import note.example.constant.StringConstant;
+import note.example.constant.ConstantValue;
 
 @SuperBuilder
 @Data
@@ -12,7 +12,7 @@ public class LoginResponse extends CommonResponse {
     public static LoginResponse form(String jwtToken) {
         return LoginResponse.builder()
                 .code(200)
-                .message(StringConstant.OPERATION_SUCCESSFUL)
+                .message(ConstantValue.OPERATION_SUCCESSFUL)
                 .token(jwtToken)
                 .build();
     }

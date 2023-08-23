@@ -2,7 +2,7 @@ package note.example.dto.response;
 
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
-import note.example.constant.StringConstant;
+import note.example.constant.ConstantValue;
 import note.example.model.User;
 
 @SuperBuilder
@@ -15,7 +15,7 @@ public class SignupResponse extends CommonResponse {
     public static SignupResponse form(User user) {
         return SignupResponse.builder()
                 .code(200)
-                .message(StringConstant.OPERATION_SUCCESSFUL)
+                .message(ConstantValue.OPERATION_SUCCESSFUL)
                 .name(user.name)
                 .email(user.email)
                 .isActive(user.isActive)
