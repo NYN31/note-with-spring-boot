@@ -11,16 +11,16 @@ import java.time.Instant;
 @Getter
 @Setter
 @MappedSuperclass
-public class BasicAttribute {
+public class DBCommon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    protected Long id;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
-    public Instant createdAt;
+    protected Instant createdAt;
 
     @UpdateTimestamp
-    @Column(name = "last_modified_at", updatable = true, nullable = false)
-    public Instant lastModifiedAt;
+    @Column(name = "last_modified_at", nullable = false)
+    protected Instant lastModifiedAt;
 }

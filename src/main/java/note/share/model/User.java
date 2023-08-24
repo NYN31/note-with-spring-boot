@@ -1,22 +1,46 @@
 package note.share.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import note.share.constant.enums.RegistrationType;
+import note.share.constant.enums.Role;
+import note.share.constant.enums.Status;
 
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity(name = "auth_user")
 @Table
-public class User extends BasicAttribute {
-    public String name;
+public class User extends DBCommon {
+    @Size(min = 3, max = 60, message = "Name length should be between 3 and 60 characters")
+    @Column(nullable = false)
+    private String name;
 
-    @Column(unique = true)
-    public String email;
+    @Size(min = 3, max = 80, message = "Name length should be between 3 and 80 characters")
+    @Column(unique = true, nullable = false)
+    private String username;
 
-    public String password;
+    @Column(unique = true, nullable = false)
+    private String email;
 
-    public boolean isActive;
+    @Column(nullable = false)
+    private String password;
+
+    private String profilePicture;
+
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private RegistrationType registrationType;
+
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private Status userStatus;
 }
