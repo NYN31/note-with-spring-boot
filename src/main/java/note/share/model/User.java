@@ -27,6 +27,7 @@ public class User extends DBCommon {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Size(min = 8, message = "Password length should be minimum 8 characters")
     @Column(nullable = false)
     private String password;
 
