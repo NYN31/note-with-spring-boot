@@ -30,9 +30,9 @@ public class SecurityConfiguration {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/auth/**", "/user/**").permitAll()
-                        .requestMatchers("/admin/**").hasAnyAuthority(Role.USER.getName())
-                        //.requestMatchers("/user/**").hasAnyAuthority(Role.USER.getName())
+                        .requestMatchers("/auth/**", "/public/**").permitAll()
+                        .requestMatchers("/admin/**").hasAnyAuthority(Role.ADMIN.getName())
+                        .requestMatchers("/user/**").hasAnyAuthority(Role.USER.getName())
                         .anyRequest()
                         .authenticated()
                 )
