@@ -3,7 +3,6 @@ package note.share.configuration;
 import note.share.constant.enums.Role;
 import note.share.repository.UserRepository;
 import note.share.service.JwtService;
-import note.share.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,12 +16,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private final UserService userService;
 
-    public SecurityConfiguration(JwtService jwtService, UserRepository userRepository, UserService userService) {
+    public SecurityConfiguration(JwtService jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
-        this.userService = userService;
     }
 
     @Bean
@@ -37,7 +34,7 @@ public class SecurityConfiguration {
                         .authenticated()
                 )
                 .addFilterBefore(
-                        new JwtAuthenticationFilter(jwtService, userRepository, userService),
+                        new JwtAuthenticationFilter(jwtService, userRepository),
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .build();
