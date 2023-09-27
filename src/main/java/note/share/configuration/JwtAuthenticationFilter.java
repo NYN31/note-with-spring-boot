@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static note.share.constant.ConstantValue.*;
@@ -29,12 +30,10 @@ import static note.share.constant.ConstantValue.*;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private final UserService userService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository, UserService userService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
-        this.userService = userService;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             DecodedJWT decodedJWT = jwtService.verify(token);
             Long userId = decodedJWT.getClaim("userId").asLong();
-            User user = userService.findUserById(userId);
+            User user = findUserById(userId);
             setAuthenticationContext(decodedJWT, user);
         } catch (Exception e) {
             log.info("token verification failed.");
@@ -74,5 +73,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         context.setAuthentication(authentication);
         SecurityContextHolder.setContext(context);
+    }
+
+    private User findUserById(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new RuntimeException("Unauthorized User.");
+        }
+        return user.get();
     }
 }
